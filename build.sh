@@ -5,6 +5,11 @@ if [ ! -d "${QNX_TARGET}" ]; then
     exit 1
 fi
 
+if [ ! -d "${QNX_STAGE}" ]; then
+    echo "QNX_STAGE is not set. Exiting..."
+    exit 1
+fi
+
 rm -rf build/ install/
 
 for arch in armv7 aarch64 x86_64; do
@@ -47,4 +52,10 @@ for arch in armv7 aarch64 x86_64; do
 
     cd ../../
 
+    # manually install files into stage:
+    rsync -havz install/${CPUVARDIR}/lib/* ${QNX_STAGE}/${CPUVARDIR}/usr/lib/
+
 done
+
+# manually install files into stage:
+rsync -havz install/${CPUVARDIR}/include/* ${QNX_STAGE}/usr/include
