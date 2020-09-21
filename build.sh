@@ -54,7 +54,11 @@ for arch in armv7 aarch64 x86_64; do
         -DCMAKE_INSTALL_PREFIX=../../install/${CPUVARDIR} \
         ../.. || exit 1
 
-    make -j $(command nproc 2>/dev/null || echo 12) || exit 1
+    make
+    if [[ $? -ne 0 ]] ; then
+        exit 1
+    fi
+
     make install
 
     cd ../../
