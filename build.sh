@@ -10,6 +10,13 @@ if [ ! -d "${QNX_STAGE}" ]; then
     exit 1
 fi
 
+git clone https://github.com/leethomason/tinyxml2.git /tmp/tinyxml2
+cd /tmp/tinyxml2
+git checkout bf15233ad88390461f6ab0dbcf046cce643c5fcb
+cd -
+rsync -haz --exclude 'README.md' /tmp/tinyxml2/* .
+rm -rf /tmp/tinyxml2
+
 rm -rf build/ install/
 
 for arch in armv7 aarch64 x86_64; do
